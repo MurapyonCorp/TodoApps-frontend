@@ -1,3 +1,3 @@
 export const Footer = () => {
-  return <h1>footer</h1>;
+  return <p>Copyright © 2024 All Rights Reserved.</p>;
 };

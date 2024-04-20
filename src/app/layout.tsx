@@ -19,9 +19,15 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <Header />
-        {children}
-        <Footer />
+        <div className="container-2xl grid grid-rows-auto1fr grid-cols-full min-h-screen">
+          <header className="bg-red-500 dark:bg-red-400 p-2">
+            <Header />
+          </header>
+          <main className="">{children}</main>
+          <footer className="bg-red-950 text-center text-white dark:bg-red-200 dark:text-black p-1">
+            <Footer />
+          </footer>
+        </div>
       </body>
     </html>
   );
