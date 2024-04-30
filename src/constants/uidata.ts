@@ -3,5 +3,5 @@
  * @type {Object}
  */
 export const UI_DATA = {
-  HOME_TITLE: 'TODO List',
+  HOME_TITLE: 'Todo app',
 }

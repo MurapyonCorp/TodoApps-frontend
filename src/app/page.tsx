@@ -1,12 +1,46 @@
-import { DoneArea } from "@/components/DoneArea";
-import { IncompleteArea } from "@/components/IncompleteArea";
+"use client";
+import { TodoInput } from "@/components/TodoInput";
+import { DoneList } from "@/components/todoList/DoneList";
+import { IncompleteList } from "@/components/todoList/IncompleteList";
+import { useTodos } from "@/hooks/useTodos";
 
 export default function Home() {
+  const {
+    todo,
+    setTodo,
+    todos,
+    todoId,
+    createTodo,
+    updateStatusTodo,
+    updateTitleTodo,
+    deleteTodo,
+  } = useTodos();
+
   return (
-    <div className="grid grid-cols-4 my-20">
-      <div className="col-start-2 col-span-2 space-y-20">
-        <IncompleteArea />
-        <DoneArea />
+    <div className="w-max h-max min-h-full min-w-[33%] py-5 space-y-7 mx-auto">
+      <TodoInput
+        todo={todo}
+        setTodo={setTodo}
+        todoId={todoId}
+        onClick={createTodo}
+      />
+      <div className="rounded-md bg-blue-400 dark:bg-blue-500 min-w-max min-h-48 h-max py-3">
+        <h1 className="text-2xl text-center font-bold">未完了</h1>
+        <IncompleteList
+          todos={todos}
+          updateStatusTodo={updateStatusTodo}
+          updateTitleTodo={updateTitleTodo}
+          deleteTodo={deleteTodo}
+        />
+      </div>
+      <div className="rounded-md bg-teal-400 dark:bg-teal-500 min-h-48 h-max py-3">
+        <h1 className="text-2xl text-center font-bold">完了済</h1>
+        <DoneList
+          todos={todos}
+          updateStatusTodo={updateStatusTodo}
+          updateTitleTodo={updateTitleTodo}
+          deleteTodo={deleteTodo}
+        />
       </div>
     </div>
   );
