@@ -9,11 +9,12 @@ type Props = {
 
 export const DoneList = (props: Props) => {
   const { todos, updateStatusTodo, updateTitleTodo, deleteTodo } = props;
+  const doneTodos = todos.filter((todo) => todo.status == TodoStatus.done);
 
   return (
     <>
       <ul className="mx-40 min-w-max mt-2">
-        {todos.map((todo) => (
+        {doneTodos.map((todo) => (
           <li
             key={todo.id}
             className="flex items-center justify-between space-x-4 py-1"
@@ -26,11 +27,7 @@ export const DoneList = (props: Props) => {
             />
             <div className="flex min-w-0 flex-1 items-center space-x-3">
               <div className="min-w-0 flex-1">
-                <label
-                  className={
-                    "truncate font-medium text-gray-900 dark:text-gray-100 line-through"
-                  }
-                >
+                <label className="truncate font-medium text-gray-900 dark:text-gray-100 line-through">
                   {todo.title}
                 </label>
               </div>

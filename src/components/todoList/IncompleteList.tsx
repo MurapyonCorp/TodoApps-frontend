@@ -9,12 +9,15 @@ type Props = {
 
 export const IncompleteList = (props: Props) => {
   const { todos, updateStatusTodo, updateTitleTodo, deleteTodo } = props;
+  const incompleteTodos = todos.filter(
+    (todo) => todo.status == TodoStatus.incomplete
+  );
 
   return (
     <>
-      {todos?.length > 0 && (
+      {incompleteTodos?.length > 0 && (
         <ul className="mx-40 min-w-max mt-2">
-          {todos.map((todo) => (
+          {incompleteTodos.map((todo) => (
             <li
               key={todo.id}
               className="flex items-center justify-between space-x-4 py-1"
@@ -27,13 +30,8 @@ export const IncompleteList = (props: Props) => {
               />
               <div className="flex min-w-0 flex-1 items-center space-x-3">
                 <div className="min-w-0 flex-1">
-                  <label
-                    className={
-                      todo.status == TodoStatus.done
-                        ? "truncate font-medium text-gray-900 dark:text-gray-100 line-through"
-                        : "truncate font-medium text-gray-900 dark:text-gray-100"
-                    }
-                  >
+                  {}
+                  <label className="truncate font-medium text-gray-900 dark:text-gray-100">
                     {todo.title}
                   </label>
                 </div>

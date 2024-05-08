@@ -9,6 +9,13 @@ export const useTodos = () => {
   const [todos, setTodos] = useState<TodoModel[]>([]);
   const [todoId, setTodoId] = useState<string>("");
 
+  const returnTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   useEffect(() => {
     readAllTodos();
   }, []);
@@ -70,6 +77,7 @@ export const useTodos = () => {
   const updateTitleTodo = (updateTodo: TodoModel) => {
     setTodo(updateTodo.title);
     setTodoId(updateTodo.id);
+    returnTop();
   };
 
   const deleteTodo = async (deleteTodo: TodoModel) => {

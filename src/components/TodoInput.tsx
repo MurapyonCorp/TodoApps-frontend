@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction, MouseEventHandler, FormEventHandler } from "react";
+import { Dispatch, FormEventHandler, SetStateAction } from "react";
 
 type Props = {
   todo: string;
-  setTodo: Dispatch<SetStateAction<string>>;
   todoId: string;
+  setTodo: Dispatch<SetStateAction<string>>;
   onClick: FormEventHandler<HTMLFormElement>;
 };
 
 export const TodoInput = (props: Props) => {
-  const { todo, setTodo, todoId, onClick } = props;
+  const { todo, todoId, setTodo, onClick } = props;
 
   return (
     <form onSubmit={onClick} className="flex flex-row min-w-max space-x-3">
@@ -19,7 +19,10 @@ export const TodoInput = (props: Props) => {
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
       />
-      <button type="submit" className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg p-2 text-center text-sm">
+      <button
+        type="submit"
+        className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg p-2 text-center text-sm"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"

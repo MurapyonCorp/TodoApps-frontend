@@ -20,8 +20,8 @@ export default function Home() {
     <div className="w-max h-max min-h-full min-w-[33%] py-5 space-y-7 mx-auto">
       <TodoInput
         todo={todo}
-        setTodo={setTodo}
         todoId={todoId}
+        setTodo={setTodo}
         onClick={createTodo}
       />
       <div className="rounded-md bg-blue-400 dark:bg-blue-500 min-w-max min-h-48 h-max py-3">
