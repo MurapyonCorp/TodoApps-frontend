@@ -25,6 +25,7 @@ export default function Home() {
     <div className="w-max h-max min-h-full min-w-[33%] py-5 space-y-7 mx-auto">
       <TodoInput
         todo={todo}
+        clickUpdateTitle={clickUpdateTitle}
         setTodo={setTodo}
         onSubmit={createTodo}
       />
@@ -46,9 +47,15 @@ export default function Home() {
       <div className="rounded-md bg-teal-400 dark:bg-teal-500 min-h-48 h-max py-3">
         <h1 className="text-2xl text-center font-bold">完了済</h1>
         <DoneList
+          todoTitle={todoTitle}
+          todoId={todoId}
           todos={todos}
           updateStatusTodo={updateStatusTodo}
           updateTitleTodo={updateTitleTodo}
+          clickUpdateTitle={clickUpdateTitle}
+          setTodoTitle={setTodoTitle}
+          onClick={updateTodo}
+          setClickUpdateTitle={setClickUpdateTitle}
           deleteTodo={deleteTodo}
         />
       </div>

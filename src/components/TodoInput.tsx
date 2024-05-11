@@ -2,12 +2,13 @@ import { Dispatch, FormEventHandler, SetStateAction } from "react";
 
 type Props = {
   todo: string;
+  clickUpdateTitle: boolean;
   setTodo: Dispatch<SetStateAction<string>>;
   onSubmit: FormEventHandler<HTMLFormElement>;
 };
 
 export const TodoInput = (props: Props) => {
-  const { todo, setTodo, onSubmit } = props;
+  const { todo, clickUpdateTitle, setTodo, onSubmit } = props;
 
   return (
     <form onSubmit={onSubmit} className="flex flex-row min-w-max space-x-3">
@@ -16,10 +17,12 @@ export const TodoInput = (props: Props) => {
         className="basis-full py-2 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Enter your task"
         value={todo}
+        disabled={clickUpdateTitle}
         onChange={(e) => setTodo(e.target.value)}
       />
       <button
         type="submit"
+        disabled={clickUpdateTitle}
         className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg p-2 text-center text-sm"
       >
         <svg
