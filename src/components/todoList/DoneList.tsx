@@ -17,7 +17,7 @@ export const DoneList = (props: Props) => {
         {doneTodos.map((todo) => (
           <li
             key={todo.id}
-            className="flex items-center justify-between space-x-4 py-1"
+            className="flex items-center justify-between space-x-4 py-2"
           >
             <input
               type="checkbox"

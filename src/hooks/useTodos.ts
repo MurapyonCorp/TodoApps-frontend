@@ -6,15 +6,10 @@ import { REQUEST_DATA } from "@/constants/requestdata";
 
 export const useTodos = () => {
   const [todo, setTodo] = useState<string>("");
+  const [todoTitle, setTodoTitle] = useState<string>("");
   const [todos, setTodos] = useState<TodoModel[]>([]);
   const [todoId, setTodoId] = useState<string>("");
-
-  const returnTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const [clickUpdateTitle, setClickUpdateTitle] = useState(false);
 
   useEffect(() => {
     readAllTodos();
@@ -53,6 +48,24 @@ export const useTodos = () => {
     }
     readAllTodos();
     setTodo("");
+    setTodoTitle("");
+    setTodoId("");
+  };
+
+  const updateTodo = async () => {
+    if (!todoTitle) return;
+    await fetch(REQUEST_DATA.TODO_PUT, {
+      method: "PUT",
+      body: JSON.stringify({
+        id: todoId,
+        title: todoTitle,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    readAllTodos();
+    setTodoTitle("");
     setTodoId("");
   };
 
@@ -75,9 +88,9 @@ export const useTodos = () => {
   };
 
   const updateTitleTodo = (updateTodo: TodoModel) => {
-    setTodo(updateTodo.title);
+    setClickUpdateTitle(true);
+    setTodoTitle(updateTodo.title);
     setTodoId(updateTodo.id);
-    returnTop();
   };
 
   const deleteTodo = async (deleteTodo: TodoModel) => {
@@ -90,13 +103,18 @@ export const useTodos = () => {
 
   return {
     todo,
+    todoTitle,
     setTodo,
+    setTodoTitle,
     todos,
     setTodos,
     todoId,
     setTodoId,
+    clickUpdateTitle,
+    setClickUpdateTitle,
     readAllTodos,
     createTodo,
+    updateTodo,
     updateStatusTodo,
     updateTitleTodo,
     deleteTodo,
