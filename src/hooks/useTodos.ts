@@ -64,6 +64,7 @@ export const useTodos = () => {
         "Content-Type": "application/json",
       },
     });
+    setClickUpdateTitle(false);
     readAllTodos();
     setTodoTitle("");
     setTodoId("");
