@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, MouseEventHandler } from "react";
 import { TodoModel, TodoStatus } from "@/models/todos.model";
 
 type Props = {
+  date: object;
   todoTitle: string;
   todoId: string;
   todos: TodoModel[];
@@ -16,6 +17,7 @@ type Props = {
 
 export const DoneList = (props: Props) => {
   const {
+    date,
     todoTitle,
     todos,
     todoId,
@@ -27,7 +29,11 @@ export const DoneList = (props: Props) => {
     setClickUpdateTitle,
     deleteTodo,
   } = props;
-  const doneTodos = todos.filter((todo) => todo.status == TodoStatus.done);
+  const doneTodos = todos.filter(
+    (todo) =>
+      JSON.stringify(todo.target_date) === JSON.stringify(date) &&
+      todo.status == TodoStatus.done
+  );
 
   return (
     <>

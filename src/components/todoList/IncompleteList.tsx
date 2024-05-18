@@ -2,6 +2,7 @@ import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import { TodoModel, TodoStatus } from "@/models/todos.model";
 
 type Props = {
+  date: object;
   todoTitle: string;
   todoId: string;
   todos: TodoModel[];
@@ -16,6 +17,7 @@ type Props = {
 
 export const IncompleteList = (props: Props) => {
   const {
+    date,
     todoTitle,
     todos,
     todoId,
@@ -28,7 +30,9 @@ export const IncompleteList = (props: Props) => {
     deleteTodo,
   } = props;
   const incompleteTodos = todos.filter(
-    (todo) => todo.status == TodoStatus.incomplete
+    (todo) =>
+      JSON.stringify(todo.target_date) === JSON.stringify(date) &&
+      todo.status === TodoStatus.incomplete
   );
 
   return (

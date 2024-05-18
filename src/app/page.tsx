@@ -6,6 +6,7 @@ import { useTodos } from "@/hooks/useTodos";
 
 export default function Home() {
   const {
+    date,
     todo,
     todoTitle,
     setTodo,
@@ -14,6 +15,7 @@ export default function Home() {
     todoId,
     clickUpdateTitle,
     setClickUpdateTitle,
+    handleDateChange,
     createTodo,
     updateTodo,
     updateStatusTodo,
@@ -24,14 +26,17 @@ export default function Home() {
   return (
     <div className="w-max h-max min-h-full min-w-[33%] py-5 space-y-7 mx-auto">
       <TodoInput
+        date={date}
         todo={todo}
         clickUpdateTitle={clickUpdateTitle}
+        handleDateChange={handleDateChange}
         setTodo={setTodo}
         onSubmit={createTodo}
       />
       <div className="rounded-md bg-blue-400 dark:bg-blue-500 min-w-max min-h-48 h-max py-3">
         <h1 className="text-2xl text-center font-bold">未完了</h1>
         <IncompleteList
+          date={date}
           todoTitle={todoTitle}
           todoId={todoId}
           todos={todos}
@@ -47,6 +52,7 @@ export default function Home() {
       <div className="rounded-md bg-teal-400 dark:bg-teal-500 min-h-48 h-max py-3">
         <h1 className="text-2xl text-center font-bold">完了済</h1>
         <DoneList
+          date={date}
           todoTitle={todoTitle}
           todoId={todoId}
           todos={todos}

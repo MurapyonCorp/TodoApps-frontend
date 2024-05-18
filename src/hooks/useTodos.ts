@@ -5,6 +5,14 @@ import { TodoModel, TodoStatus } from "@/models/todos.model";
 import { REQUEST_DATA } from "@/constants/requestdata";
 
 export const useTodos = () => {
+  const year = new Date().getFullYear();
+  const get_month = new Date().getMonth() + 1;
+  const month = `0${get_month}`.slice(-2);
+  const day = new Date().getDate();
+  const [date, setDate] = useState({
+    startDate: `${year}-${month}-${day}`,
+    endDate: `${year}-${month}-${day}`,
+  });
   const [todo, setTodo] = useState<string>("");
   const [todoTitle, setTodoTitle] = useState<string>("");
   const [todos, setTodos] = useState<TodoModel[]>([]);
@@ -14,6 +22,11 @@ export const useTodos = () => {
   useEffect(() => {
     readAllTodos();
   }, []);
+
+  const handleDateChange = (newDate: any) => {
+    console.log("newDate:", newDate);
+    setDate(newDate);
+  };
 
   const readAllTodos = async () => {
     const res = await fetch(REQUEST_DATA.TODO_GET);
@@ -27,19 +40,9 @@ export const useTodos = () => {
       await fetch(REQUEST_DATA.TODO_POST, {
         method: "POST",
         body: JSON.stringify({
+          target_date: date,
           title: todo,
           status: TodoStatus.incomplete,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } else {
-      await fetch(REQUEST_DATA.TODO_PUT, {
-        method: "PUT",
-        body: JSON.stringify({
-          id: todoId,
-          title: todo,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -103,8 +106,10 @@ export const useTodos = () => {
   };
 
   return {
+    date,
     todo,
     todoTitle,
+    setDate,
     setTodo,
     setTodoTitle,
     todos,
@@ -113,6 +118,7 @@ export const useTodos = () => {
     setTodoId,
     clickUpdateTitle,
     setClickUpdateTitle,
+    handleDateChange,
     readAllTodos,
     createTodo,
     updateTodo,

@@ -18,6 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        {/* <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> */}
+      </head>
       <body className={inter.className}>
         <div className="container-2xl grid grid-rows-auto1fr grid-cols-full min-h-screen">
           <header className="bg-red-500 dark:bg-red-400 p-2">
@@ -28,6 +31,8 @@ export default function RootLayout({
             <Footer />
           </footer>
         </div>
+        {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script> */}
       </body>
     </html>
   );

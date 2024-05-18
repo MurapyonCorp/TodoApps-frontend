@@ -5,6 +5,7 @@ export enum TodoStatus {
 
 export interface TodoModel {
   id: string;
+  target_date: object;
   title: string;
   status: TodoStatus;
   created_at: Date;
