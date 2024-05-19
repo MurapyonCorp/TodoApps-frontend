@@ -31,7 +31,7 @@ export default function Home() {
         clickUpdateTitle={clickUpdateTitle}
         handleDateChange={handleDateChange}
         setTodo={setTodo}
-        onSubmit={createTodo}
+        onClick={createTodo}
       />
       <div className="rounded-md bg-gray-300 dark:bg-gray-600 min-w-max min-h-48 h-max py-3">
         <h1 className="text-2xl text-center font-bold">未完了</h1>

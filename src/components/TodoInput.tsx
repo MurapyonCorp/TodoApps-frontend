@@ -1,4 +1,4 @@
-import { Dispatch, FormEventHandler, SetStateAction } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 
 type Props = {
@@ -7,15 +7,15 @@ type Props = {
   clickUpdateTitle: boolean;
   handleDateChange: (newDate: object | null) => void;
   setTodo: Dispatch<SetStateAction<string>>;
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const TodoInput = (props: Props) => {
-  const { date, todo, clickUpdateTitle, handleDateChange, setTodo, onSubmit } =
+  const { date, todo, clickUpdateTitle, handleDateChange, setTodo, onClick } =
     props;
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-row min-w-max space-x-3">
+    <div className="flex flex-row min-w-max space-x-3">
       <span className="basis-5/12">
         <Datepicker
           primaryColor="red"
@@ -38,8 +38,9 @@ export const TodoInput = (props: Props) => {
         onChange={(e) => setTodo(e.target.value)}
       />
       <button
-        type="submit"
+        type="button"
         disabled={clickUpdateTitle || todo === "" || date.startDate === null}
+        onClick={onClick}
         className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg p-2 text-center text-sm disabled:cursor-not-allowed"
       >
         <svg
@@ -53,6 +54,6 @@ export const TodoInput = (props: Props) => {
         </svg>
         追加
       </button>
-    </form>
+    </div>
   );
 };
