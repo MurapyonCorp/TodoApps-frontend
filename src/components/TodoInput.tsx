@@ -18,8 +18,9 @@ export const TodoInput = (props: Props) => {
     <form onSubmit={onSubmit} className="flex flex-row min-w-max space-x-3">
       <span className="basis-5/12">
         <Datepicker
+          primaryColor="red"
           i18n="ja"
-          placeholder="日付を選択"
+          placeholder="select date"
           displayFormat="YYYY/MM/DD"
           value={date}
           onChange={handleDateChange}
@@ -30,7 +31,7 @@ export const TodoInput = (props: Props) => {
       </span>
       <input
         type="text"
-        className="basis-full py-2 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="basis-full py-2 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 disabled:opacity-40 disabled:cursor-not-allowed"
         placeholder="Enter your task"
         value={todo}
         disabled={clickUpdateTitle}
@@ -39,7 +40,7 @@ export const TodoInput = (props: Props) => {
       <button
         type="submit"
         disabled={clickUpdateTitle || todo === "" || date.startDate === null}
-        className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 dark:bg-gradient-to-r dark:from-pink-200 dark:via-pink-400 dark:to-pink-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg p-2 text-center text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+        className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg p-2 text-center text-sm disabled:cursor-not-allowed"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

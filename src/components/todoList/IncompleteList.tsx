@@ -46,7 +46,7 @@ export const IncompleteList = (props: Props) => {
             >
               <input
                 type="checkbox"
-                className="text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
+                className="text-red-400 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
                 onChange={() => updateStatusTodo(todo)}
                 checked={false}
               />
@@ -55,7 +55,7 @@ export const IncompleteList = (props: Props) => {
                   {clickUpdateTitle && todo.id === todoId ? (
                     <input
                       type="text"
-                      className="basis-full py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="basis-full py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                       value={todoTitle}
                       onChange={(e) => setTodoTitle(e.target.value)}
                     />

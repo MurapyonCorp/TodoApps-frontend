@@ -33,7 +33,7 @@ export default function Home() {
         setTodo={setTodo}
         onSubmit={createTodo}
       />
-      <div className="rounded-md bg-blue-400 dark:bg-blue-500 min-w-max min-h-48 h-max py-3">
+      <div className="rounded-md bg-gray-300 dark:bg-gray-600 min-w-max min-h-48 h-max py-3">
         <h1 className="text-2xl text-center font-bold">未完了</h1>
         <IncompleteList
           date={date}
@@ -49,7 +49,7 @@ export default function Home() {
           deleteTodo={deleteTodo}
         />
       </div>
-      <div className="rounded-md bg-teal-400 dark:bg-teal-500 min-h-48 h-max py-3">
+      <div className="rounded-md bg-gray-400 dark:bg-gray-800 min-h-48 h-max py-3">
         <h1 className="text-2xl text-center font-bold">完了済</h1>
         <DoneList
           date={date}
