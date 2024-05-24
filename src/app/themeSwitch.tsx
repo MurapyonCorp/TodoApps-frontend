@@ -19,7 +19,7 @@ export const ThemeSwitch = () => {
 
   return (
     <Dropdown
-      label={theme === "dark" ? <IoSunny size={25} /> : <IoMoon size={25} />}
+      label={theme === "dark" ? <IoSunny className="size-7" /> : <IoMoon className="size-7" />}
       arrowIcon={false}
       dismissOnClick={true}
       color={""}
