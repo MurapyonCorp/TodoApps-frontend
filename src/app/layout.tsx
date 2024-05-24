@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,20 +18,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className="dark" suppressHydrationWarning>
       <head>
         {/* <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> */}
       </head>
-      <body className={inter.className}>
-        <div className="container-2xl grid grid-rows-auto1fr grid-cols-full min-h-screen">
-          <header className="p-2">
-            <Header />
-          </header>
-          <main>{children}</main>
-          <footer className="bg-red-950 text-center text-white dark:bg-red-400 dark:text-black p-1">
-            <Footer />
-          </footer>
-        </div>
+      <body className={`${inter.className}`}>
+        <Providers>
+          <div className="container-2xl grid grid-rows-auto1fr grid-cols-full min-h-screen">
+            <header className="p-2">
+              <Header />
+            </header>
+            <main>{children}</main>
+            <footer className="bg-red-950 text-center text-white dark:bg-red-400 dark:text-black p-1">
+              <Footer />
+            </footer>
+          </div>
+        </Providers>
         {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script> */}
       </body>

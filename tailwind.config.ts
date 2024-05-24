@@ -22,6 +22,6 @@ const config: Config = {
   plugins: [
     flowbite.plugin()
   ],
-  darkMode: "media",
+  darkMode: "selector",
 };
 export default config;
