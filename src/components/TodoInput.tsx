@@ -15,8 +15,8 @@ export const TodoInput = (props: Props) => {
     props;
 
   return (
-    <div className="flex flex-row min-w-max space-x-3">
-      <span className="basis-5/12">
+    <div className="flex flex-row space-x-3">
+      <span className="flex-auto">
         <Datepicker
           primaryColor="red"
           i18n="ja"
@@ -31,7 +31,7 @@ export const TodoInput = (props: Props) => {
       </span>
       <input
         type="text"
-        className="basis-full py-2 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="flex-auto w-full py-2 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 disabled:opacity-40 disabled:cursor-not-allowed"
         placeholder="Enter your task"
         value={todo}
         disabled={clickUpdateTitle}

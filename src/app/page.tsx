@@ -24,7 +24,7 @@ export default function Home() {
   } = useTodos();
 
   return (
-    <div className="w-max h-max min-h-full min-w-[33%] py-5 space-y-7 mx-auto">
+    <div className="w-1/3 py-5 space-y-7">
       <TodoInput
         date={date}
         todo={todo}
@@ -33,7 +33,7 @@ export default function Home() {
         setTodo={setTodo}
         onClick={createTodo}
       />
-      <div className="rounded-md bg-gray-300 dark:bg-gray-600 min-w-max min-h-48 h-max py-3">
+      <div className="rounded-md bg-gray-300 dark:bg-gray-600 min-h-48 py-3">
         <h1 className="text-2xl text-center font-bold">未完了</h1>
         <IncompleteList
           date={date}
@@ -49,7 +49,7 @@ export default function Home() {
           deleteTodo={deleteTodo}
         />
       </div>
-      <div className="rounded-md bg-gray-400 dark:bg-gray-800 min-h-48 h-max py-3">
+      <div className="rounded-md bg-gray-400 dark:bg-gray-800 min-h-48 py-3">
         <h1 className="text-2xl text-center font-bold">完了済</h1>
         <DoneList
           date={date}

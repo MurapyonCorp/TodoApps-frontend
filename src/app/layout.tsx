@@ -28,7 +28,7 @@ export default function RootLayout({
             <header className="p-2">
               <Header />
             </header>
-            <main>{children}</main>
+            <main className="flex justify-center">{children}</main>
             <footer className="bg-red-950 text-center text-white dark:bg-red-400 dark:text-black p-1">
               <Footer />
             </footer>
