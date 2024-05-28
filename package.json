@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.13",
+    "@fullcalendar/daygrid": "^6.1.13",
+    "@fullcalendar/react": "^6.1.13",
     "dayjs": "^1.11.11",
     "eslint-config-prettier": "^9.1.0",
     "flowbite": "^2.3.0",
@@ -18,7 +21,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "react-tailwindcss-datepicker": "^1.6.6"
+    "react-tailwindcss-datepicker": "^1.6.6",
+    "react-timer-hook": "^3.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -19,11 +19,20 @@ export const ThemeSwitch = () => {
 
   return (
     <Dropdown
-      label={theme === "dark" ? <IoSunny className="size-7" /> : <IoMoon className="size-7" />}
+      label={
+        {
+          light: <IoMoon className="size-7" />,
+          dark: <IoSunny className="size-7" />,
+          system: window.matchMedia("(prefers-color-scheme: dark)").matches ? (
+            <IoSunny className="size-7" />
+          ) : (
+            <IoMoon className="size-7" />
+          ),
+        }[theme!]
+      }
       arrowIcon={false}
       dismissOnClick={true}
       color={""}
-      size={"xs"}
     >
       <Dropdown.Item icon={IoSunny} onClick={() => setTheme("light")}>
         Light

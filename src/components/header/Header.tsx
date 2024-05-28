@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { UI_DATA } from "@/constants/uidata";
 import { ThemeSwitch } from "@/app/themeSwitch";
+import { StopWatch } from "../StopWatch";
 
 export const Header = () => {
   return (
@@ -13,7 +14,10 @@ export const Header = () => {
         height={41}
         className="ml-4"
       />
-      <div className="absolute top-1 right-20">
+      <div className="absolute left-20">
+        <StopWatch />
+      </div>
+      <div className="absolute right-20">
         <ThemeSwitch />
       </div>
     </div>

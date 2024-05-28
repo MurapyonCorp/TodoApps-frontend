@@ -5,7 +5,7 @@ type Props = {
   date: { startDate: string; endDate: string };
   todo: string;
   clickUpdateTitle: boolean;
-  handleDateChange: (newDate: object | null) => void;
+  handleDateChange: any;
   setTodo: Dispatch<SetStateAction<string>>;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };

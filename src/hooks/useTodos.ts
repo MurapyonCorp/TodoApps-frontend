@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
 import { TodoModel, TodoStatus } from "@/models/todos.model";
 import { REQUEST_DATA } from "@/constants/requestdata";
@@ -23,7 +23,7 @@ export const useTodos = () => {
     readAllTodos();
   }, []);
 
-  const handleDateChange = (newDate: any) => {
+  const handleDateChange = (newDate: SetStateAction<{ startDate: string; endDate: string; }>) => {
     console.log("newDate:", newDate);
     setDate(newDate);
   };
