@@ -4,12 +4,16 @@ import { CountUpTimerModel } from "@/models/countUpTimers.model";
 import { REQUEST_TIME_DATA } from "@/constants/requestdata";
 
 export const useCountUpTimers = () => {
-  const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [dates, setDates] = useState<CountUpTimerModel[]>([]);
   const [editTime, setEditTime] = useState<string>("");
   const [dateId, setDateId] = useState<string>("");
   const [clickUpdateEdit, setClickUpdateEdit] = useState(false);
+
+  const today =
+    `${new Date().getFullYear()}-` +
+    `0${new Date().getMonth() + 1}`.slice(-2) +
+    `-${new Date().getDate()}`;
 
   useEffect(() => {
     readAllCountUpTimers();
@@ -22,12 +26,14 @@ export const useCountUpTimers = () => {
   };
 
   const createCountUpTimer = async () => {
-    if (!date) return;
     if (dateId === "") {
       await fetch(REQUEST_TIME_DATA.TODO_POST, {
         method: "POST",
         body: JSON.stringify({
-          target_date: date,
+          target_date: {
+            startDate: today,
+            endDate: today,
+          },
           total_amounts: time,
         }),
         headers: {
@@ -36,7 +42,6 @@ export const useCountUpTimers = () => {
       });
     }
     readAllCountUpTimers();
-    setDate("");
     setDateId("");
   };
 
@@ -73,17 +78,19 @@ export const useCountUpTimers = () => {
   };
 
   return {
-    date,
     time,
     dates,
     editTime,
     dateId,
     clickUpdateEdit,
-    setDate,
     setTime,
     setDates,
     setEditTime,
     setDateId,
     setClickUpdateEdit,
+    createCountUpTimer,
+    updateCountUpTimer,
+    updateTime,
+    deleteCountUpTimer,
   };
 };

@@ -1,5 +1,5 @@
 "use client";
-import { Button, Dropdown, Modal } from "flowbite-react";
+import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import { BsStopwatchFill } from "react-icons/bs";
 import { useStopwatch } from "react-timer-hook";
@@ -32,9 +32,12 @@ export const StopWatch = () => {
                 <button onClick={start}>Start</button>
                 <button onClick={pause}>Pause</button>
                 <button
-                  onClick={
-                    reset as unknown as React.MouseEventHandler<HTMLButtonElement>
-                  }
+                  onClick={() => {
+                    reset(
+                      new Date(),
+                      isRunning ? true : false
+                    ) as unknown as React.MouseEventHandler<HTMLButtonElement>;
+                  }}
                 >
                   Reset
                 </button>
@@ -44,8 +47,12 @@ export const StopWatch = () => {
         </Modal.Body>
         {!isRunning && (
           <Modal.Footer className="justify-center space-x-14">
-            <Button color={"failure"} onClick={() => setOpenModal(false)}>登録</Button>
-            <Button color={"light"} onClick={() => setOpenModal(false)}>キャンセル</Button>
+            <Button color={"failure"} onClick={() => setOpenModal(false)}>
+              登録
+            </Button>
+            <Button color={"light"} onClick={() => setOpenModal(false)}>
+              キャンセル
+            </Button>
           </Modal.Footer>
         )}
       </Modal>
