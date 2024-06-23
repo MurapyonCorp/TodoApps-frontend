@@ -6,9 +6,8 @@ import { REQUEST_DATA } from "@/constants/requestdata";
 
 export const useTodos = () => {
   const year = new Date().getFullYear();
-  const get_month = new Date().getMonth() + 1;
-  const month = `0${get_month}`.slice(-2);
-  const day = new Date().getDate();
+  const month = `0${new Date().getMonth() + 1}`.slice(-2);
+  const day = `0${new Date().getDate()}`.slice(-2);
   const [date, setDate] = useState({
     startDate: `${year}-${month}-${day}`,
     endDate: `${year}-${month}-${day}`,
@@ -23,7 +22,9 @@ export const useTodos = () => {
     readAllTodos();
   }, []);
 
-  const handleDateChange = (newDate: SetStateAction<{ startDate: string; endDate: string; }>) => {
+  const handleDateChange = (
+    newDate: SetStateAction<{ startDate: string; endDate: string }>
+  ) => {
     console.log("newDate:", newDate);
     setDate(newDate);
   };

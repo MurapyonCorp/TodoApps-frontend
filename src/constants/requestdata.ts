@@ -10,8 +10,8 @@ export const REQUEST_DATA = {
 }
 
 export const REQUEST_TIME_DATA = {
-  TODO_GET: 'http://localhost:3000/countup-timers',
-  TODO_POST: 'http://localhost:3000/countup-timers',
-  TODO_PUT: 'http://localhost:3000/countup-timers',
-  TODO_DELETE: 'http://localhost:3000/countup-timers/',
+  COUNTUP_GET: 'http://localhost:3000/countup-timers',
+  COUNTUP_POST: 'http://localhost:3000/countup-timers',
+  COUNTUP_PUT: 'http://localhost:3000/countup-timers',
+  COUNTUP_DELETE: 'http://localhost:3000/countup-timers/',
 }

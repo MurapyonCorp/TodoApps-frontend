@@ -5,7 +5,10 @@ export enum TodoStatus {
 
 export interface TodoModel {
   id: string;
-  target_date: object;
+  target_date: {
+    startDate: string;
+    endDate: string;
+  };
   title: string;
   status: TodoStatus;
   created_at: Date;

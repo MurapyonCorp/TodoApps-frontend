@@ -1,14 +1,15 @@
 "use client";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import { useRouter } from "next/navigation";
-import { Card } from "flowbite-react";
+import { CalendarCard } from "@/components/CalendarCard";
+import { useCountUpTimers } from "@/hooks/useCountUpTimers";
 
 export default function TotalMonth() {
   const router = useRouter();
+  const { countUpTimers, countUpId, updateTime } = useCountUpTimers();
   const backPage = () => {
     router.back();
   };
+
   return (
     <>
       <button
@@ -29,18 +30,7 @@ export default function TotalMonth() {
           />
         </svg>
       </button>
-      <div className="relative h-full">
-        <Card className="absolute w-[1200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-auto ">
-          <FullCalendar
-            plugins={[dayGridPlugin]}
-            locale={"ja"}
-            contentHeight={"auto"}
-            dayCellContent={(arg) => arg.date.getDate()}
-            businessHours={{ daysOfWeek: [1, 2, 3, 4, 5] }}
-            dayHeaderClassNames={"bg-gray-300 dark:bg-gray-700"}
-          />
-        </Card>
-      </div>
+      <CalendarCard countUpTimers={countUpTimers} countUpId={countUpId} updateTime={updateTime} />
     </>
   );
 }
