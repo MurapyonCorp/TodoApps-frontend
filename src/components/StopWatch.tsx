@@ -29,6 +29,7 @@ export const StopWatch = (props: Props) => {
     reset,
     onClickRegister,
   } = props;
+
   return (
     <>
       <Button color={""} onClick={() => setOpenModal(true)}>
@@ -70,19 +71,20 @@ export const StopWatch = (props: Props) => {
           </div>
         </Modal.Body>
         {!isRunning && (
-          <Modal.Footer className="justify-center space-x-14">
+          <Modal.Footer className="justify-center">
             <Button
               color={"failure"}
               onClick={() => {
                 onClickRegister(); // ここはonClick内のイベントが複数あるため、アロー関数のインライン関数として()が必要。
                 setOpenModal(false);
               }}
-              disabled={seconds === 0 ? true : false}
+              disabled={
+                hours === 0 && minutes === 0 && seconds === 0 ? true : false
+              }
+              label="2"
+              className="w-1/2"
             >
               登録
-            </Button>
-            <Button color={"light"} onClick={() => setOpenModal(false)}>
-              キャンセル
             </Button>
           </Modal.Footer>
         )}

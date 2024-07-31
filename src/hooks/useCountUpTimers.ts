@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { CountUpTimerModel } from "@/models/countUpTimers.model";
 import { REQUEST_TIME_DATA } from "@/constants/requestdata";
 import { useStopwatch } from "react-timer-hook";
+import { EventClickArg } from "@fullcalendar/core/index.js";
 
 export const useCountUpTimers = () => {
   const [countUpTimers, setCountUpTimers] = useState<CountUpTimerModel[]>([]);
@@ -66,17 +67,20 @@ export const useCountUpTimers = () => {
     setCountUpId("");
   };
 
-  const updateTime = (updateTime: CountUpTimerModel) => {
+  const updateTime = (updateTime: EventClickArg) => {
     setClickUpdateEdit(true);
-    setEditTime(updateTime.total_amounts);
-    setCountUpId(updateTime.id);
+    setEditTime(updateTime.event.title);
+    setCountUpId(updateTime.event.id);
   };
 
   const deleteCountUpTimer = async (deleteCountUpTimer: CountUpTimerModel) => {
     if (!deleteCountUpTimer) return;
-    await fetch(REQUEST_TIME_DATA.COUNTUP_DELETE + deleteCountUpTimer.id, {
-      method: "DELETE",
-    });
+    await fetch(
+      REQUEST_TIME_DATA.COUNTUP_DELETE + deleteCountUpTimer.id,
+      {
+        method: "DELETE",
+      }
+    );
     readAllCountUpTimers();
   };
 
