@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StopWatch } from "@/components/StopWatch";
 import { TodoInput } from "@/components/TodoInput";
 import { DoneList } from "@/components/todoList/DoneList";
@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useConfirmGuard } from "@/hooks/useConfirmGuard";
 
 export default function Home() {
+  const [isTimerWorked, setIsTimerWorked] = useState(false);
+
   const {
     date,
     todo,
@@ -39,15 +41,9 @@ export default function Home() {
     createCountUpTimer,
   } = useCountUpTimers();
 
-  const [isTimerWorked, setIsTimerWorked] = useState(false);
+  useConfirmGuard(isTimerWorked);
 
-  const timerWorkJudge = () => {
-    hours === 0 && minutes === 0 && seconds === 0
-      ? setIsTimerWorked(false) // 三項演算子の処理部分が複数の場合、全体を()で囲む 例：(setIsTimerWorked(false), console.log("true"))
-      : setIsTimerWorked(true);
-    console.log(isTimerWorked);
-  };
-  // useConfirmGuard(isTimerWorked);
+  // 三項演算子の処理部分が複数の場合、全体を()で囲む 例：(setIsTimerWorked(false), console.log("true"))
 
   return (
     <div className="flex justify-center">
@@ -57,6 +53,8 @@ export default function Home() {
           minutes={minutes}
           hours={hours}
           isRunning={isRunning}
+          isTimerWorked={isTimerWorked}
+          setIsTimerWorked={setIsTimerWorked}
           start={start}
           pause={pause}
           reset={reset}
@@ -72,11 +70,7 @@ export default function Home() {
           setTodo={setTodo}
           onClick={createTodo}
         />
-        <Link
-          href={"./total-month"}
-          className="flex absolute top-0 -right-32"
-          onClick={timerWorkJudge}
-        >
+        <Link href={"./total-month"} className="flex absolute top-0 -right-32">
           集計データ
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,6 @@
 "use client";
 import { Button, Modal } from "flowbite-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { BsStopwatchFill } from "react-icons/bs";
 
 type Props = {
@@ -8,6 +8,8 @@ type Props = {
   minutes: number;
   hours: number;
   isRunning: boolean;
+  isTimerWorked: boolean;
+  setIsTimerWorked: Dispatch<SetStateAction<boolean>>;
   start: () => void;
   pause: () => void;
   reset: (
@@ -19,11 +21,14 @@ type Props = {
 
 export const StopWatch = (props: Props) => {
   const [openModal, setOpenModal] = useState(false);
+
   const {
     seconds,
     minutes,
     hours,
     isRunning,
+    isTimerWorked,
+    setIsTimerWorked,
     start,
     pause,
     reset,
@@ -37,7 +42,11 @@ export const StopWatch = (props: Props) => {
       </Button>
       <Modal
         show={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={() => {
+          (hours !== 0 || minutes !== 0 || seconds !== 0) &&
+            setIsTimerWorked(true);
+          setOpenModal(false);
+        }}
         size={"md"}
         position={"top-left"}
       >
