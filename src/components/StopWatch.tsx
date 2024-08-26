@@ -42,11 +42,7 @@ export const StopWatch = (props: Props) => {
       </Button>
       <Modal
         show={openModal}
-        onClose={() => {
-          (hours !== 0 || minutes !== 0 || seconds !== 0) &&
-            setIsTimerWorked(true);
-          setOpenModal(false);
-        }}
+        onClose={() => setOpenModal(false)}
         size={"md"}
         position={"top-left"}
       >
@@ -61,7 +57,14 @@ export const StopWatch = (props: Props) => {
               <p className="pb-3">{isRunning ? "Running" : "Not running"}</p>
               <div className="space-x-14">
                 {!isRunning ? (
-                  <button onClick={start}>Start</button>
+                  <button
+                    onClick={() => {
+                      start();
+                      // setIsTimerWorked(true);
+                    }}
+                  >
+                    Start
+                  </button>
                 ) : (
                   <button onClick={pause}>Pause</button>
                 )}
@@ -71,6 +74,7 @@ export const StopWatch = (props: Props) => {
                       new Date(),
                       isRunning ? true : false
                     ) as unknown as React.MouseEventHandler<HTMLButtonElement>;
+                    // setIsTimerWorked(false);
                   }}
                 >
                   Reset

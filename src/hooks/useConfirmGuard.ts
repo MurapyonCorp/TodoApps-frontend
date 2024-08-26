@@ -1,8 +1,14 @@
 "use client";
 import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export const useConfirmGuard = (isTimerWorked: boolean) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   useEffect(() => {
+    const url = `${pathname}?${searchParams}`;
+    console.log(url);
     const handleClick = (event: MouseEvent) => {
       if (isTimerWorked) {
         if (
@@ -24,11 +30,11 @@ export const useConfirmGuard = (isTimerWorked: boolean) => {
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
-    window.addEventListener("click", handleClick, true);
+    // window.addEventListener("click", handleClick, true);
 
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("click", handleClick, true);
+      // window.removeEventListener("click", handleClick, true);
     };
-  }, [isTimerWorked]);
+  }, [isTimerWorked, pathname, searchParams]);
 };
