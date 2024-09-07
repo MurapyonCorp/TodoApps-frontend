@@ -25,7 +25,7 @@ export const useTodos = () => {
   const handleDateChange = (
     newDate: SetStateAction<{ startDate: string; endDate: string }>
   ) => {
-    console.log("newDate:", newDate);
+    // console.log("newDate:", newDate);
     setDate(newDate);
   };
 

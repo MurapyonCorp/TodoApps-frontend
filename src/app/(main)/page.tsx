@@ -1,17 +1,13 @@
 "use client";
-import { useState } from "react";
-import { StopWatch } from "@/components/StopWatch";
 import { TodoInput } from "@/components/TodoInput";
 import { DoneList } from "@/components/todoList/DoneList";
 import { IncompleteList } from "@/components/todoList/IncompleteList";
-import { useCountUpTimers } from "@/hooks/useCountUpTimers";
 import { useTodos } from "@/hooks/useTodos";
 import Link from "next/link";
-import { useConfirmGuard } from "@/hooks/useConfirmGuard";
+import { Button } from "flowbite-react";
+import { BsStopwatchFill } from "react-icons/bs";
 
 export default function Home() {
-  const [isTimerWorked, setIsTimerWorked] = useState(false);
-
   const {
     date,
     todo,
@@ -30,36 +26,19 @@ export default function Home() {
     deleteTodo,
   } = useTodos();
 
-  const {
-    seconds,
-    minutes,
-    hours,
-    isRunning,
-    start,
-    pause,
-    reset,
-    createCountUpTimer,
-  } = useCountUpTimers();
-
-  useConfirmGuard(isTimerWorked);
-
   // 三項演算子の処理部分が複数の場合、全体を()で囲む 例：(setIsTimerWorked(false), console.log("true"))
 
   return (
     <div className="flex justify-center">
       <div className="absolute top-2 left-20">
-        <StopWatch
-          seconds={seconds}
-          minutes={minutes}
-          hours={hours}
-          isRunning={isRunning}
-          isTimerWorked={isTimerWorked}
-          setIsTimerWorked={setIsTimerWorked}
-          start={start}
-          pause={pause}
-          reset={reset}
-          onClickRegister={createCountUpTimer}
-        />
+        <Button
+          color={""}
+          onClick={() =>
+            window.open("./stopwatch", "_blank", "width=525,height=260")
+          }
+        >
+          <BsStopwatchFill className="size-7" />
+        </Button>
       </div>
       <div className="w-1/3 py-5 space-y-7 relative">
         <TodoInput

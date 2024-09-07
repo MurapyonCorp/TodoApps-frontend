@@ -2,8 +2,6 @@
 import Image from "next/image";
 import { UI_DATA } from "@/constants/uidata";
 import { ThemeSwitch } from "@/app/themeSwitch";
-import { StopWatch } from "../StopWatch";
-import { useCountUpTimers } from "@/hooks/useCountUpTimers";
 
 export const Header = () => {
   return (

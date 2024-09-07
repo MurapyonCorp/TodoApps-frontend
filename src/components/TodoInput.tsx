@@ -2,7 +2,7 @@ import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 
 type Props = {
-  date: { startDate: string; endDate: string };
+  date: { startDate: any; endDate: any };
   todo: string;
   clickUpdateTitle: boolean;
   handleDateChange: any;
@@ -15,7 +15,10 @@ export const TodoInput = (props: Props) => {
     props;
 
   return (
-    <div className="flex flex-row space-x-3">
+    <div
+      className="flex flex-row space-x-3"
+      onClick={() => console.log(date)}
+    >
       <span className="flex-auto">
         <Datepicker
           primaryColor="red"
