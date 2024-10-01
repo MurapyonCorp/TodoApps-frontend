@@ -5,10 +5,19 @@ import { useCountUpTimers } from "@/hooks/useCountUpTimers";
 
 export default function TotalMonth() {
   const router = useRouter();
-  const { countUpTimers, countUpId, updateTime, editTime, deleteCountUpTimer } =
-    useCountUpTimers();
+  const {
+    countUpTimers,
+    countUpId,
+    updateTime,
+    editHours,
+    editMinutes,
+    editSeconds,
+    clickUpdateEdit,
+    deleteCountUpTimer,
+  } = useCountUpTimers();
+
   const backPage = () => {
-    router.back();
+    router.push("./");
   };
 
   return (
@@ -35,7 +44,10 @@ export default function TotalMonth() {
         countUpTimers={countUpTimers}
         countUpId={countUpId}
         updateTime={updateTime}
-        editTime={editTime}
+        editHours={editHours}
+        editMinutes={editMinutes}
+        editSeconds={editSeconds}
+        clickUpdateEdit={clickUpdateEdit}
         deleteCountUpTimer={deleteCountUpTimer}
       />
     </>

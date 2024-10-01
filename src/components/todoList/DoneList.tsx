@@ -2,7 +2,10 @@ import { Dispatch, SetStateAction, MouseEventHandler } from "react";
 import { TodoModel, TodoStatus } from "@/models/todos.model";
 
 type Props = {
-  date: object;
+  date: {
+    startDate: string;
+    endDate: string;
+  };
   todoTitle: string;
   todoId: string;
   todos: TodoModel[];

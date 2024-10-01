@@ -6,18 +6,21 @@ import { useStopwatch } from "react-timer-hook";
 import { EventClickArg } from "@fullcalendar/core/index.js";
 
 export const useCountUpTimers = () => {
+  const year = new Date().getFullYear();
+  const month = `0${new Date().getMonth() + 1}`.slice(-2);
+  const day = `0${new Date().getDate()}`.slice(-2);
+  const [today, setToday] = useState({
+    startDate: `${year}-${month}-${day}`,
+    endDate: `${year}-${month}-${day}`,
+  });
   const [countUpTimers, setCountUpTimers] = useState<CountUpTimerModel[]>([]);
-  const [editTime, setEditTime] = useState<string>("");
+  const [editHours, setEditHours] = useState<number>(0);
+  const [editMinutes, setEditMinutes] = useState<number>(0);
+  const [editSeconds, setEditSeconds] = useState<number>(0);
   const [countUpId, setCountUpId] = useState<string>("");
-  const [clickUpdateEdit, setClickUpdateEdit] = useState(false);
+  const [clickUpdateEdit, setClickUpdateEdit] = useState<boolean>(false);
   const { seconds, minutes, hours, isRunning, start, pause, reset } =
     useStopwatch();
-
-  const today =
-    `${new Date().getFullYear()}-` +
-    `0${new Date().getMonth() + 1}`.slice(-2) +
-    `-` +
-    `0${new Date().getDate()}`.slice(-2);
 
   useEffect(() => {
     readAllCountUpTimers();
@@ -34,11 +37,10 @@ export const useCountUpTimers = () => {
       await fetch(REQUEST_TIME_DATA.COUNTUP_POST, {
         method: "POST",
         body: JSON.stringify({
-          target_date: {
-            startDate: today,
-            endDate: today,
-          },
-          total_amounts: `${hours}:${minutes}:${seconds}`,
+          target_date: today,
+          time_hours: hours,
+          time_minutes: minutes,
+          time_seconds: seconds,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -50,12 +52,14 @@ export const useCountUpTimers = () => {
   };
 
   const updateCountUpTimer = async () => {
-    if (!editTime) return;
+    if (!editHours) return;
     await fetch(REQUEST_TIME_DATA.COUNTUP_PUT, {
       method: "PUT",
       body: JSON.stringify({
         id: countUpId,
-        total_amounts: editTime,
+        time_hours: editHours,
+        time_minutes: editMinutes,
+        time_seconds: editSeconds,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -63,28 +67,30 @@ export const useCountUpTimers = () => {
     });
     setClickUpdateEdit(false);
     readAllCountUpTimers();
-    setEditTime("");
+    setEditHours(0);
+    setEditMinutes(0);
+    setEditSeconds(0);
     setCountUpId("");
   };
 
-  const updateTime = (updateTime: EventClickArg) => {
+  const updateTime = (updateTime: CountUpTimerModel) => {
     setClickUpdateEdit(true);
-    setEditTime(updateTime.event.title);
-    setCountUpId(updateTime.event.id);
+    setEditHours(updateTime.time_hours);
+    setEditMinutes(updateTime.time_minutes);
+    setEditSeconds(updateTime.time_seconds);
+    setCountUpId(updateTime.id);
   };
 
   const deleteCountUpTimer = async (deleteCountUpTimer: CountUpTimerModel) => {
     if (!deleteCountUpTimer) return;
-    await fetch(
-      REQUEST_TIME_DATA.COUNTUP_DELETE + deleteCountUpTimer.id,
-      {
-        method: "DELETE",
-      }
-    );
+    await fetch(REQUEST_TIME_DATA.COUNTUP_DELETE + deleteCountUpTimer.id, {
+      method: "DELETE",
+    });
     readAllCountUpTimers();
   };
 
   return {
+    today,
     seconds,
     minutes,
     hours,
@@ -93,11 +99,16 @@ export const useCountUpTimers = () => {
     pause,
     reset,
     countUpTimers,
-    editTime,
+    editHours,
+    editMinutes,
+    editSeconds,
     countUpId,
     clickUpdateEdit,
+    setToday,
     setCountUpTimers,
-    setEditTime,
+    setEditHours,
+    setEditMinutes,
+    setEditSeconds,
     setCountUpId,
     setClickUpdateEdit,
     createCountUpTimer,

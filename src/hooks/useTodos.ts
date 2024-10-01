@@ -16,7 +16,7 @@ export const useTodos = () => {
   const [todoTitle, setTodoTitle] = useState<string>("");
   const [todos, setTodos] = useState<TodoModel[]>([]);
   const [todoId, setTodoId] = useState<string>("");
-  const [clickUpdateTitle, setClickUpdateTitle] = useState(false);
+  const [clickUpdateTitle, setClickUpdateTitle] = useState<boolean>(false);
 
   useEffect(() => {
     readAllTodos();

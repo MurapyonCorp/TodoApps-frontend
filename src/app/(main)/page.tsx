@@ -26,17 +26,16 @@ export default function Home() {
     deleteTodo,
   } = useTodos();
 
+  const openStopwatch = () => {
+    open("./stopwatch", "stopwatch", "width=520,height=260");
+  };
+
   // 三項演算子の処理部分が複数の場合、全体を()で囲む 例：(setIsTimerWorked(false), console.log("true"))
 
   return (
     <div className="flex justify-center">
       <div className="absolute top-2 left-20">
-        <Button
-          color={""}
-          onClick={() =>
-            window.open("./stopwatch", "_blank", "width=525,height=260")
-          }
-        >
+        <Button color={""} onClick={openStopwatch}>
           <BsStopwatchFill className="size-7" />
         </Button>
       </div>
