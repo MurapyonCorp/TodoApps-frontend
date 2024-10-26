@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { CountUpTimerModel } from "@/models/countUpTimers.model";
 import { REQUEST_TIME_DATA } from "@/constants/requestdata";
 import { useStopwatch } from "react-timer-hook";
-import { EventClickArg } from "@fullcalendar/core/index.js";
 
 export const useCountUpTimers = () => {
   const year = new Date().getFullYear();
@@ -52,7 +51,7 @@ export const useCountUpTimers = () => {
   };
 
   const updateCountUpTimer = async () => {
-    if (!editHours) return;
+    if (!editHours || !editMinutes || !editSeconds) return;
     await fetch(REQUEST_TIME_DATA.COUNTUP_PUT, {
       method: "PUT",
       body: JSON.stringify({

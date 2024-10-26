@@ -15,10 +15,7 @@ export const TodoInput = (props: Props) => {
     props;
 
   return (
-    <div
-      className="flex flex-row space-x-3"
-      onClick={() => console.log(date)}
-    >
+    <div className="flex flex-row space-x-3">
       <span className="flex-auto">
         <Datepicker
           primaryColor="red"

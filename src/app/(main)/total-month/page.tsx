@@ -6,13 +6,17 @@ import { useCountUpTimers } from "@/hooks/useCountUpTimers";
 export default function TotalMonth() {
   const router = useRouter();
   const {
-    countUpTimers,
     countUpId,
+    updateCountUpTimer,
     updateTime,
     editHours,
     editMinutes,
     editSeconds,
     clickUpdateEdit,
+    setClickUpdateEdit,
+    setEditHours,
+    setEditMinutes,
+    setEditSeconds,
     deleteCountUpTimer,
   } = useCountUpTimers();
 
@@ -41,13 +45,17 @@ export default function TotalMonth() {
         </svg>
       </button>
       <CalendarCard
-        countUpTimers={countUpTimers}
         countUpId={countUpId}
         updateTime={updateTime}
         editHours={editHours}
         editMinutes={editMinutes}
         editSeconds={editSeconds}
         clickUpdateEdit={clickUpdateEdit}
+        setClickUpdateEdit={setClickUpdateEdit}
+        setEditHours={setEditHours}
+        setEditMinutes={setEditMinutes}
+        setEditSeconds={setEditSeconds}
+        onClick={updateCountUpTimer}
         deleteCountUpTimer={deleteCountUpTimer}
       />
     </>
