@@ -4,11 +4,20 @@ type Props = {
   value: number;
   onChange: (value: number) => void;
   onInvalidNumber: (value: string) => void;
+  minSecFlag: boolean;
+  onInvalidValue: (value: number) => void;
   className?: string;
 };
 
-export const InputHoursNumber = (props: Props) => {
-  const { value, onChange, onInvalidNumber, className } = props;
+export const InputNumber = (props: Props) => {
+  const {
+    value,
+    onChange,
+    onInvalidNumber,
+    minSecFlag,
+    onInvalidValue,
+    className,
+  } = props;
 
   const [localValue, setLocalValue] = useState<string>(`${value}`);
 
@@ -23,6 +32,12 @@ export const InputHoursNumber = (props: Props) => {
     } else {
       setLocalValue(v);
       onChange(Number(v));
+    }
+
+    if (minSecFlag) {
+      if (60 <= Number(v)) {
+        onInvalidValue(Number(v))
+      }
     }
   };
 

@@ -11,7 +11,7 @@ import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import { Card, Modal } from "flowbite-react";
 import { useTimeCalculation } from "@/hooks/useTimeCalculation";
 import { EditDeleteButton } from "./atoms/EditDeleteButton";
-import { InputHoursNumber } from "./atoms/InputHoursNumber";
+import { InputNumber } from "./atoms/InputNumber";
 
 type Props = {
   countUpId: string;
@@ -26,10 +26,6 @@ type Props = {
   setClickUpdateEdit: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
   deleteCountUpTimer: Function;
-};
-
-type Form = {
-  amount: number;
 };
 
 type FormErrors = {
@@ -54,21 +50,23 @@ export const CalendarCard = (props: Props) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [getDateArg, setGetDateArg] = useState<string>("");
-  const [form, setForm] = useState<Form>({
-    amount: 0,
-  });
   const [errors, setErrors] = useState<FormErrors>({});
 
   const { totalOfADay, totalTimeCalculation } = useTimeCalculation();
 
   const handleChangeAmount = (value: number) => {
     setErrors({});
-    setForm({ amount: value });
   };
 
   const handleInvalidAmount = (value: string) => {
     setErrors({
       amount: "数値を入力してください",
+    });
+  };
+
+  const handleInvalidValue = (value: number) => {
+    setErrors({
+      message: "0~59の範囲で入力してください",
     });
   };
 
@@ -130,26 +128,32 @@ export const CalendarCard = (props: Props) => {
                         key={item.id}
                         className="flex justify-center py-2 text-5xl text-center"
                       >
-                        <InputHoursNumber
+                        <InputNumber
                           value={editHours}
                           onChange={handleChangeAmount}
                           onInvalidNumber={handleInvalidAmount}
+                          minSecFlag={false}
+                          onInvalidValue={handleInvalidValue}
                           className="w-1/4 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         />
                         <span>:</span>
-                        {/* <InputNumber
+                        <InputNumber
                           value={editMinutes}
                           onChange={handleChangeAmount}
                           onInvalidNumber={handleInvalidAmount}
+                          minSecFlag={true}
+                          onInvalidValue={handleInvalidValue}
                           className="w-1/4 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
-                        /> */}
+                        />
                         <span>:</span>
-                        {/* <InputNumber
+                        <InputNumber
                           value={editSeconds}
                           onChange={handleChangeAmount}
                           onInvalidNumber={handleInvalidAmount}
+                          minSecFlag={true}
+                          onInvalidValue={handleInvalidValue}
                           className="w-1/4 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
-                        /> */}
+                        />
                         <div className="flex space-x-4 ml-6">
                           <EditDeleteButton
                             onClick={onClick}
@@ -173,6 +177,7 @@ export const CalendarCard = (props: Props) => {
                           {errors.amount}
                         </p>
                       )}
+                      <p className="flex-wrap text-red-500">{errors.message}</p>
                     </>
                   ) : (
                     <li
