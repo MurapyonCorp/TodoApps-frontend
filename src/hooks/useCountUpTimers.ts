@@ -110,6 +110,7 @@ export const useCountUpTimers = () => {
     setEditSeconds,
     setCountUpId,
     setClickUpdateEdit,
+    readAllCountUpTimers,
     createCountUpTimer,
     updateCountUpTimer,
     updateTime,

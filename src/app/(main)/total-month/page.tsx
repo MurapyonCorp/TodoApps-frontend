@@ -6,6 +6,7 @@ import { useCountUpTimers } from "@/hooks/useCountUpTimers";
 export default function TotalMonth() {
   const router = useRouter();
   const {
+    countUpTimers,
     countUpId,
     updateCountUpTimer,
     updateTime,

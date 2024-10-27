@@ -50,22 +50,53 @@ export const CalendarCard = (props: Props) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [getDateArg, setGetDateArg] = useState<string>("");
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [hourErrors, setHourErrors] = useState<FormErrors>({});
+  const [minuteErrors, setMinuteErrors] = useState<FormErrors>({});
+  const [secondErrors, setSecondErrors] = useState<FormErrors>({});
 
   const { totalOfADay, totalTimeCalculation } = useTimeCalculation();
 
-  const handleChangeAmount = (value: number) => {
-    setErrors({});
+  const handleChangeHour = (value: number) => {
+    setHourErrors({});
+    setEditHours(value);
   };
 
-  const handleInvalidAmount = (value: string) => {
-    setErrors({
+  const handleChangeMinute = (value: number) => {
+    setMinuteErrors({});
+    setEditMinutes(value);
+  };
+
+  const handleChangeSecond = (value: number) => {
+    setSecondErrors({});
+    setEditSeconds(value);
+  };
+
+  const handleInvalidHour = (value: string) => {
+    setHourErrors({
       amount: "数値を入力してください",
     });
   };
 
-  const handleInvalidValue = (value: number) => {
-    setErrors({
+  const handleInvalidMinute = (value: string) => {
+    setMinuteErrors({
+      amount: "数値を入力してください",
+    });
+  };
+
+  const handleInvalidSecond = (value: string) => {
+    setSecondErrors({
+      amount: "数値を入力してください",
+    });
+  };
+
+  const handleInvalidValueMinute = (value: number) => {
+    setMinuteErrors({
+      message: "0~59の範囲で入力してください",
+    });
+  };
+
+  const handleInvalidValueSecond = (value: number) => {
+    setSecondErrors({
       message: "0~59の範囲で入力してください",
     });
   };
@@ -111,7 +142,9 @@ export const CalendarCard = (props: Props) => {
         <Modal
           show={openModal}
           onClose={() => {
-            setErrors({});
+            setHourErrors({});
+            setMinuteErrors({});
+            setSecondErrors({});
             setOpenModal(false);
           }}
           size={"xl"}
@@ -130,28 +163,28 @@ export const CalendarCard = (props: Props) => {
                       >
                         <InputNumber
                           value={editHours}
-                          onChange={handleChangeAmount}
-                          onInvalidNumber={handleInvalidAmount}
+                          onChange={handleChangeHour}
+                          onInvalidNumber={handleInvalidHour}
                           minSecFlag={false}
-                          onInvalidValue={handleInvalidValue}
+                          onInvalidValue={() => {}}
                           className="w-1/3 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         />
                         <span>:</span>
                         <InputNumber
                           value={editMinutes}
-                          onChange={handleChangeAmount}
-                          onInvalidNumber={handleInvalidAmount}
+                          onChange={handleChangeMinute}
+                          onInvalidNumber={handleInvalidMinute}
                           minSecFlag={true}
-                          onInvalidValue={handleInvalidValue}
+                          onInvalidValue={handleInvalidValueMinute}
                           className="w-1/6 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         />
-                        <span>:</span>
+                        <span onClick={() => console.log(minuteErrors)}>:</span>
                         <InputNumber
                           value={editSeconds}
-                          onChange={handleChangeAmount}
-                          onInvalidNumber={handleInvalidAmount}
+                          onChange={handleChangeSecond}
+                          onInvalidNumber={handleInvalidSecond}
                           minSecFlag={true}
-                          onInvalidValue={handleInvalidValue}
+                          onInvalidValue={handleInvalidValueSecond}
                           className="w-1/6 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         />
                         <div className="flex space-x-4 ml-6">
@@ -159,7 +192,11 @@ export const CalendarCard = (props: Props) => {
                             onClick={onClick}
                             className="flex items-center rounded bg-gray-100 px-0.5 py-0.5 text-xs font-medium text-gray-800 hover:bg-gray-200 dark:bg-gray-600 dark:text-gray-100 dark:hover:bg-gray-500"
                             disabled={
-                              errors.amount || errors.message ? true : false
+                              Object.keys(hourErrors).length !== 0 ||
+                              Object.keys(minuteErrors).length !== 0 ||
+                              Object.keys(secondErrors).length !== 0
+                                ? true
+                                : false
                             }
                             svgClassName="w-7 h-7"
                             path_dproperty="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
@@ -167,7 +204,9 @@ export const CalendarCard = (props: Props) => {
                           <EditDeleteButton
                             onClick={() => {
                               setClickUpdateEdit(false);
-                              setErrors({});
+                              setHourErrors({});
+                              setMinuteErrors({});
+                              setSecondErrors({});
                             }}
                             className="flex items-center rounded bg-red-100 px-0.5 py-0.5 text-xs font-medium text-red-800 hover:bg-red-200 dark:bg-red-700 dark:text-red-100 dark:hover:bg-red-600"
                             svgClassName="w-7 h-7"
@@ -175,12 +214,21 @@ export const CalendarCard = (props: Props) => {
                           />
                         </div>
                       </li>
-                      {errors.amount && (
-                        <p className="flex-wrap text-red-500">
-                          {errors.amount}
-                        </p>
-                      )}
-                      <p className="flex-wrap text-red-500">{errors.message}</p>
+                      <p className="flex-wrap text-red-500">
+                        {hourErrors.amount}
+                      </p>
+                      <p className="flex-wrap text-red-500">
+                        {minuteErrors.amount}
+                      </p>
+                      <p className="flex-wrap text-red-500">
+                        {secondErrors.amount}
+                      </p>
+                      <p className="flex-wrap text-red-500">
+                        {minuteErrors.message}
+                      </p>
+                      <p className="flex-wrap text-red-500">
+                        {secondErrors.message}
+                      </p>
                     </>
                   ) : (
                     <li
