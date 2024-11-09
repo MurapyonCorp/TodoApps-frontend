@@ -13,6 +13,11 @@ export const useCountUpTimers = () => {
     endDate: `${year}-${month}-${day}`,
   });
   const [countUpTimers, setCountUpTimers] = useState<CountUpTimerModel[]>([]);
+  const [openRegistModal, setOpenRegistModal] = useState(false);
+  const [createDate, setCreateDate] = useState<string>("");
+  const [createHours, setCreateHours] = useState<number>(0);
+  const [createMinutes, setCreateMinutes] = useState<number>(0);
+  const [createSeconds, setCreateSeconds] = useState<number>(0);
   const [editHours, setEditHours] = useState<number>(0);
   const [editMinutes, setEditMinutes] = useState<number>(0);
   const [editSeconds, setEditSeconds] = useState<number>(0);
@@ -24,6 +29,10 @@ export const useCountUpTimers = () => {
   useEffect(() => {
     readAllCountUpTimers();
   }, []);
+
+  const openStopwatch = () => {
+    open("./stopwatch", "stopwatch", "width=520,height=260");
+  };
 
   const readAllCountUpTimers = async () => {
     const res = await fetch(REQUEST_TIME_DATA.COUNTUP_GET);
@@ -48,10 +57,36 @@ export const useCountUpTimers = () => {
     }
     readAllCountUpTimers();
     setCountUpId("");
+    close();
+  };
+
+  const registrationCountUpTimer = async () => {
+    if (countUpId === "") {
+      await fetch(REQUEST_TIME_DATA.COUNTUP_POST, {
+        method: "POST",
+        body: JSON.stringify({
+          target_date: { startDate: createDate, endDate: createDate },
+          time_hours: createHours,
+          time_minutes: createMinutes,
+          time_seconds: createSeconds,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+    readAllCountUpTimers();
+    setCountUpId("");
+    setCreateDate("");
+    setCreateHours(0);
+    setCreateMinutes(0);
+    setCreateSeconds(0);
+    setOpenRegistModal(false);
   };
 
   const updateCountUpTimer = async () => {
-    if (!editHours || !editMinutes || !editSeconds) return;
+    // 編集内容が０時間０分０秒の場合は、returnする
+    if (!editHours && !editMinutes && !editSeconds) return;
     await fetch(REQUEST_TIME_DATA.COUNTUP_PUT, {
       method: "PUT",
       body: JSON.stringify({
@@ -98,6 +133,11 @@ export const useCountUpTimers = () => {
     pause,
     reset,
     countUpTimers,
+    openRegistModal,
+    createDate,
+    createHours,
+    createMinutes,
+    createSeconds,
     editHours,
     editMinutes,
     editSeconds,
@@ -105,13 +145,20 @@ export const useCountUpTimers = () => {
     clickUpdateEdit,
     setToday,
     setCountUpTimers,
+    setOpenRegistModal,
+    setCreateDate,
+    setCreateHours,
+    setCreateMinutes,
+    setCreateSeconds,
     setEditHours,
     setEditMinutes,
     setEditSeconds,
     setCountUpId,
     setClickUpdateEdit,
     readAllCountUpTimers,
+    openStopwatch,
     createCountUpTimer,
+    registrationCountUpTimer,
     updateCountUpTimer,
     updateTime,
     deleteCountUpTimer,

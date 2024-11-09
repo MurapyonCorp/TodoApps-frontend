@@ -1,20 +1,31 @@
 "use client";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
-import {
-  EventClickArg,
-  EventInput,
-  formatDate,
-} from "@fullcalendar/core/index.js";
+import { EventClickArg, EventInput } from "@fullcalendar/core/index.js";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
-import { Card, Modal } from "flowbite-react";
-import { useTimeCalculation } from "@/hooks/useTimeCalculation";
+import { Button, Card, Modal } from "flowbite-react";
 import { EditDeleteButton } from "./atoms/EditDeleteButton";
 import { InputNumber } from "./atoms/InputNumber";
+import { CountUpTimerModel } from "@/models/countUpTimers.model";
 
 type Props = {
+  countUpTimers: CountUpTimerModel[];
   countUpId: string;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  onClickRegistration: () => void;
+  openRegistModal: boolean;
+  createDate: string;
+  createHours: number;
+  createMinutes: number;
+  createSeconds: number;
+  setOpenRegistModal: Dispatch<SetStateAction<boolean>>;
+  setCreateDate: Dispatch<SetStateAction<string>>;
+  setCreateHours: Dispatch<SetStateAction<number>>;
+  setCreateMinutes: Dispatch<SetStateAction<number>>;
+  setCreateSeconds: Dispatch<SetStateAction<number>>;
   updateTime: Function;
   editHours: number;
   editMinutes: number;
@@ -34,7 +45,19 @@ type FormErrors = {
 
 export const CalendarCard = (props: Props) => {
   const {
+    countUpTimers,
     countUpId,
+    onClickRegistration,
+    openRegistModal,
+    createDate,
+    createHours,
+    createMinutes,
+    createSeconds,
+    setOpenRegistModal,
+    setCreateDate,
+    setCreateHours,
+    setCreateMinutes,
+    setCreateSeconds,
     updateTime,
     editHours,
     editMinutes,
@@ -54,20 +77,108 @@ export const CalendarCard = (props: Props) => {
   const [minuteErrors, setMinuteErrors] = useState<FormErrors>({});
   const [secondErrors, setSecondErrors] = useState<FormErrors>({});
 
-  const { totalOfADay, totalTimeCalculation } = useTimeCalculation();
+  // countUpTimer配列の日付(startDate)をその日のみに限定した配列を新たに作成。
+  const filterADay = countUpTimers.map((dateValue) =>
+    countUpTimers.filter(
+      (value) => value.target_date.startDate === dateValue.target_date.startDate
+    )
+  );
+
+  // filterADay配列の重複要素を排除した新たな配列
+  const aDayElementArray = Array.from(
+    new Map(
+      filterADay.map((unique) => [JSON.stringify(unique), unique])
+    ).values()
+  );
+
+  // 登録している記録の日付を配列に格納
+  const dateArray = Array.from(
+    new Map(
+      countUpTimers.map((pickup) => [
+        pickup.target_date.startDate,
+        pickup.target_date.startDate,
+      ])
+    ).values()
+  );
+
+  // 集計したい要素の取得(startDateが2024-09-20の要素を取得するなど)
+  const totalOfADay = (date: string) => {
+    return (
+      aDayElementArray.find((element) =>
+        element.find((data) => data.target_date.startDate === date)
+      ) ?? []
+    );
+  };
+
+  const totalTimeCalculation = dateArray.map((date) => {
+    const totalHoursOfADay = totalOfADay(date)
+      // 上記の配列の中から分の値を取り出して新たな配列を作成。
+      .map((array) => {
+        return array.time_hours;
+      })
+      // 配列内の全要素の合計値を返す。
+      .reduce((total, element) => {
+        return total + element;
+      }, 0);
+
+    const totalMinutesOfADay = totalOfADay(date)
+      // 上記の配列の中から分の値を取り出して新たな配列を作成。
+      .map((array) => {
+        return array.time_minutes;
+      })
+      // 配列内の全要素の合計値を返す。
+      .reduce((total, element) => {
+        return total + element;
+      }, 0);
+
+    const totalSecondsOfADay = totalOfADay(date)
+      .map((array) => {
+        return array.time_seconds;
+      })
+      .reduce((total, element) => {
+        return total + element;
+      }, 0);
+
+    // 分または秒の合計の余りを返す定数
+    const surplusCalculation = (surplus: number) => {
+      return surplus % 60;
+    };
+
+    // 分または秒の合計の繰り上げを返す定数
+    const carryUpCalculation = (carryUp: number) => {
+      return Math.floor(carryUp / 60);
+    };
+
+    const surplusMinutes = surplusCalculation(totalMinutesOfADay);
+
+    const carryUpMinutes = carryUpCalculation(totalMinutesOfADay);
+
+    const surplusSeconds = surplusCalculation(totalSecondsOfADay);
+
+    const carryUpSeconds = carryUpCalculation(totalSecondsOfADay);
+
+    const totalHours = totalHoursOfADay + carryUpMinutes;
+
+    const totalMinutes = surplusMinutes + carryUpSeconds;
+
+    return { totalHours, totalMinutes, surplusSeconds, date };
+  });
 
   const handleChangeHour = (value: number) => {
     setHourErrors({});
+    setCreateHours(value);
     setEditHours(value);
   };
 
   const handleChangeMinute = (value: number) => {
     setMinuteErrors({});
+    setCreateMinutes(value);
     setEditMinutes(value);
   };
 
   const handleChangeSecond = (value: number) => {
     setSecondErrors({});
+    setCreateSeconds(value);
     setEditSeconds(value);
   };
 
@@ -108,21 +219,9 @@ export const CalendarCard = (props: Props) => {
     color: "red",
   }));
 
-  const getFormatDate = (date: Date) =>
-    formatDate(date, {
-      month: "long",
-      year: "numeric",
-      day: "numeric",
-      locale: "ja",
-    });
-
-  const handleDateClick = useCallback((arg: DateClickArg) => {
-    alert(getFormatDate(arg.date));
-  }, []);
-
   return (
     <div className="relative h-full">
-      <Card className="absolute w-[1200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-auto">
+      <Card className="absolute xl:w-[1200px] w-full top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 m-auto">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           locale={"ja"}
@@ -136,9 +235,84 @@ export const CalendarCard = (props: Props) => {
             setOpenModal(true);
             setClickUpdateEdit(false);
           }}
-          dateClick={handleDateClick}
+          dateClick={(e: DateClickArg) => {
+            setCreateDate(e.dateStr);
+            setOpenRegistModal(true);
+          }}
           buttonText={{ today: "今日" }}
         />
+        <Modal
+          show={openRegistModal}
+          onClose={() => {
+            setHourErrors({});
+            setMinuteErrors({});
+            setSecondErrors({});
+            setOpenRegistModal(false);
+          }}
+          size="lg"
+          position="top-center"
+        >
+          <Modal.Header>Time Registration</Modal.Header>
+          <Modal.Body>
+            <p className="text-lg">{createDate}</p>
+            <div className="flex justify-center py-2 text-5xl text-center">
+              <InputNumber
+                value={createHours}
+                onChange={handleChangeHour}
+                onInvalidNumber={handleInvalidHour}
+                minSecFlag={false}
+                onInvalidValue={() => {}}
+                className="w-1/3 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+              />
+              <span className="px-2">:</span>
+              <InputNumber
+                value={createMinutes}
+                onChange={handleChangeMinute}
+                onInvalidNumber={handleInvalidMinute}
+                minSecFlag={true}
+                onInvalidValue={handleInvalidValueMinute}
+                className="w-1/6 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+              />
+              <span className="px-2">:</span>
+              <InputNumber
+                value={createSeconds}
+                onChange={handleChangeSecond}
+                onInvalidNumber={handleInvalidSecond}
+                minSecFlag={true}
+                onInvalidValue={handleInvalidValueSecond}
+                className="w-1/6 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+              />
+            </div>
+            <p className="flex-wrap text-red-500">{hourErrors.amount}</p>
+            <p className="flex-wrap text-red-500">{minuteErrors.amount}</p>
+            <p className="flex-wrap text-red-500">{secondErrors.amount}</p>
+            <p className="flex-wrap text-red-500">{minuteErrors.message}</p>
+            <p className="flex-wrap text-red-500">{secondErrors.message}</p>
+          </Modal.Body>
+          <Modal.Footer className="justify-center">
+            <Button
+              color={"failure"}
+              label="2"
+              className="w-1/2"
+              onClick={() => {
+                onClickRegistration();
+                setOpenRegistModal(false);
+              }}
+              disabled={
+                Object.keys(hourErrors).length !== 0 ||
+                Object.keys(minuteErrors).length !== 0 ||
+                Object.keys(secondErrors).length !== 0 ||
+                (createHours === 0 &&
+                  createMinutes === 0 &&
+                  createSeconds === 0)
+                  ? true
+                  : false
+              }
+            >
+              登録
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Modal
           show={openModal}
           onClose={() => {
@@ -169,7 +343,7 @@ export const CalendarCard = (props: Props) => {
                           onInvalidValue={() => {}}
                           className="w-1/3 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         />
-                        <span>:</span>
+                        <span className="px-2">:</span>
                         <InputNumber
                           value={editMinutes}
                           onChange={handleChangeMinute}
@@ -178,7 +352,7 @@ export const CalendarCard = (props: Props) => {
                           onInvalidValue={handleInvalidValueMinute}
                           className="w-1/6 py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                         />
-                        <span onClick={() => console.log(minuteErrors)}>:</span>
+                        <span className="px-2">:</span>
                         <InputNumber
                           value={editSeconds}
                           onChange={handleChangeSecond}
@@ -194,7 +368,10 @@ export const CalendarCard = (props: Props) => {
                             disabled={
                               Object.keys(hourErrors).length !== 0 ||
                               Object.keys(minuteErrors).length !== 0 ||
-                              Object.keys(secondErrors).length !== 0
+                              Object.keys(secondErrors).length !== 0 ||
+                              (editHours === 0 &&
+                                editMinutes === 0 &&
+                                editSeconds === 0)
                                 ? true
                                 : false
                             }
@@ -237,8 +414,10 @@ export const CalendarCard = (props: Props) => {
                     >
                       <div className="flex space-x-8">
                         <label>
-                          <span>{item.time_hours}</span>:
-                          <span>{item.time_minutes}</span>:
+                          <span>{item.time_hours}</span>
+                          <span className="px-1">:</span>
+                          <span>{item.time_minutes}</span>
+                          <span className="px-1">:</span>
                           <span>{item.time_seconds}</span>
                         </label>
                         <div className="flex space-x-4">

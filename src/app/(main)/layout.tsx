@@ -19,8 +19,7 @@ export default function MainLayout({
 }>) {
   return (
     <html lang="ja" className="dark" suppressHydrationWarning>
-      <head>
-      </head>
+      <head></head>
       <body className={`${inter.className}`}>
         <Providers>
           <div className="container-2xl grid grid-rows-auto1fr grid-cols-full min-h-screen">

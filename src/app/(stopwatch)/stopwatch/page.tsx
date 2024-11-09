@@ -14,12 +14,6 @@ export default function Stopwatch() {
     createCountUpTimer,
   } = useCountUpTimers();
 
-  const sleep = async (time: number) => {
-    await new Promise((resolve) => {
-      setTimeout(resolve, time);
-    });
-  };
-
   return (
     <div className="flex h-full flex-col justify-center gap-4 p-6">
       <div className="justify-center">
@@ -57,9 +51,6 @@ export default function Stopwatch() {
                 new Date(),
                 isRunning ? true : false
               ) as unknown as React.MouseEventHandler<HTMLButtonElement>;
-              sleep(100).then(() => {
-                close();
-              });
             }} // onClick内のイベントが複数ある場合、アロー関数のインライン関数としてcreateCountUpTimer()とする必要あり。
             disabled={
               hours === 0 && minutes === 0 && seconds === 0 ? true : false

@@ -7,14 +7,28 @@ export default function TotalMonth() {
   const router = useRouter();
   const {
     countUpTimers,
+    openRegistModal,
     countUpId,
+    hours,
+    minutes,
+    seconds,
+    registrationCountUpTimer,
+    createDate,
+    createHours,
+    createMinutes,
+    createSeconds,
     updateCountUpTimer,
     updateTime,
     editHours,
     editMinutes,
     editSeconds,
     clickUpdateEdit,
+    setOpenRegistModal,
     setClickUpdateEdit,
+    setCreateDate,
+    setCreateHours,
+    setCreateMinutes,
+    setCreateSeconds,
     setEditHours,
     setEditMinutes,
     setEditSeconds,
@@ -46,7 +60,22 @@ export default function TotalMonth() {
         </svg>
       </button>
       <CalendarCard
+        countUpTimers={countUpTimers}
         countUpId={countUpId}
+        hours={hours}
+        minutes={minutes}
+        seconds={seconds}
+        onClickRegistration={registrationCountUpTimer}
+        openRegistModal={openRegistModal}
+        createDate={createDate}
+        createHours={createHours}
+        createMinutes={createMinutes}
+        createSeconds={createSeconds}
+        setOpenRegistModal={setOpenRegistModal}
+        setCreateDate={setCreateDate}
+        setCreateHours={setCreateHours}
+        setCreateMinutes={setCreateMinutes}
+        setCreateSeconds={setCreateSeconds}
         updateTime={updateTime}
         editHours={editHours}
         editMinutes={editMinutes}

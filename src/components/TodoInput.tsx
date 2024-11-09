@@ -31,7 +31,7 @@ export const TodoInput = (props: Props) => {
       </span>
       <input
         type="text"
-        className="flex-auto w-full py-2 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="flex-auto w-full py-2 px-3 rounded-md max-lg:text-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 disabled:opacity-40 disabled:cursor-not-allowed"
         placeholder="Enter your task"
         value={todo}
         disabled={clickUpdateTitle}
