@@ -81,7 +81,7 @@ export default function Home() {
           <BsStopwatchFill className="size-7" />
         </Button>
       </div>
-      <div className="max-lg:hidden fixed top-20 2xl:right-[480px] xl:right-64 lg:right-16">
+      <div className="max-lg:hidden fixed top-20 2xl:right-1/6 xl:right-64 lg:right-16">
         <Link href={"./total-month"}>集計データ</Link>
       </div>
       <div className="xl:w-5/12 lg:w-2/3 py-5 space-y-7">
