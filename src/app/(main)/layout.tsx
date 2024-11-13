@@ -19,7 +19,11 @@ export default function MainLayout({
 }>) {
   return (
     <html lang="ja" className="dark" suppressHydrationWarning>
-      <head></head>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon512_rounded.png" />
+        <meta name="theme-color" content="#ffe5e5"/>
+      </head>
       <body className={`${inter.className}`}>
         <Providers>
           <div className="container-2xl grid grid-rows-auto1fr grid-cols-full min-h-screen">
