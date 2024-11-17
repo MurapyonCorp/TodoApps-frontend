@@ -29,7 +29,7 @@ export const TodoInput = (props: Props) => {
           disabled={clickUpdateTitle}
         />
       </span>
-      {/* <input
+      <input
         type="text"
         className="flex-auto w-full py-2 px-3 rounded-md max-lg:text-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500 disabled:opacity-40 disabled:cursor-not-allowed"
         placeholder="Enter your task"
@@ -53,7 +53,7 @@ export const TodoInput = (props: Props) => {
           <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" />
         </svg>
         追加
-      </button> */}
+      </button>
     </div>
   );
 };
