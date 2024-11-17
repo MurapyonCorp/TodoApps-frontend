@@ -95,7 +95,7 @@ export default function Home() {
         />
         <TodoLists
           listsAreaClassName={
-            "rounded-md bg-gray-300 dark:bg-gray-600 min-h-48 py-3"
+            "rounded-md bg-gray-300 dark:bg-gray-600 min-h-48 2xl:px-[7em] max-2xl:px-[6em] max-xl:px-[6em] max-lg:px-[8em] max-md:px-[6em] max-sm:px-[4em] py-3"
           }
           h1Text={"未完了"}
           date={date}
@@ -117,7 +117,7 @@ export default function Home() {
         />
         <TodoLists
           listsAreaClassName={
-            "rounded-md bg-gray-400 dark:bg-gray-800 min-h-48 py-3"
+            "rounded-md bg-gray-400 dark:bg-gray-800 min-h-48 2xl:px-[7em] max-2xl:px-[6em] max-xl:px-[6em] max-lg:px-[8em] max-md:px-[6em] max-sm:px-[4em] py-3"
           }
           h1Text={"完了済"}
           date={date}

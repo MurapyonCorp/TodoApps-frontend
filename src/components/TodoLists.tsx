@@ -54,7 +54,7 @@ export const TodoLists = (props: Props) => {
     <div className={listsAreaClassName}>
       <h1 className="text-2xl text-center font-bold">{h1Text}</h1>
       {todoLists?.length > 0 && (
-        <ul className="mx-40 min-w-max mt-2">
+        <ul className="min-w-max mt-2">
           {todoLists.map((todo) => (
             <li
               key={todo.id}
@@ -71,7 +71,7 @@ export const TodoLists = (props: Props) => {
                   {clickUpdateTitle && todo.id === todoId ? (
                     <input
                       type="text"
-                      className="basis-full py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+                      className="w-full py-1 px-3 rounded-md bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                       value={todoTitle}
                       onChange={(e) => setTodoTitle(e.target.value)}
                     />
