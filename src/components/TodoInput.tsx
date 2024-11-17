@@ -15,8 +15,8 @@ export const TodoInput = (props: Props) => {
     props;
 
   return (
-    <div className="flex flex-row space-x-3">
-      <span className="flex-auto">
+    <div className="lg:flex lg:flex-row lg:space-x-3 max-lg:space-y-2">
+      <span className="lg:flex-auto">
         <Datepicker
           primaryColor="red"
           i18n="ja"
@@ -41,7 +41,7 @@ export const TodoInput = (props: Props) => {
         type="button"
         disabled={clickUpdateTitle || todo === "" || date.startDate === null}
         onClick={onClick}
-        className="min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg p-2 text-center text-sm disabled:cursor-not-allowed"
+        className="max-lg:mr-0 max-lg:ml-auto min-w-max inline-flex items-center text-gray-900 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg p-2 text-center text-sm disabled:cursor-not-allowed"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
