@@ -1,6 +1,6 @@
 "use client";
 import { SetStateAction, useEffect, useState } from "react";
-
+import { format } from "date-fns";
 import { TodoModel, TodoStatus } from "@/models/todos.model";
 import { REQUEST_DATA } from "@/constants/requestdata";
 
@@ -22,10 +22,13 @@ export const useTodos = () => {
     readAllTodos();
   }, []);
 
-  const handleDateChange = (
-    newDate: SetStateAction<{ startDate: string; endDate: string }>
-  ) => {
-    setDate(newDate);
+  const handleDateChange = (newDate: any) => {
+    const formattedStartDate = format(
+      new Date(newDate.startDate),
+      "yyyy-MM-dd"
+    );
+    const formattedEndDate = format(new Date(newDate.endDate), "yyyy-MM-dd");
+    setDate({ startDate: formattedStartDate, endDate: formattedEndDate });
   };
 
   const readAllTodos = async () => {
