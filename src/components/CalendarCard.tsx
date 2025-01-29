@@ -149,17 +149,19 @@ export const CalendarCard = (props: Props) => {
       return Math.floor(carryUp / 60);
     };
 
-    const surplusMinutes = surplusCalculation(totalMinutesOfADay);
-
-    const carryUpMinutes = carryUpCalculation(totalMinutesOfADay);
-
     const surplusSeconds = surplusCalculation(totalSecondsOfADay);
 
     const carryUpSeconds = carryUpCalculation(totalSecondsOfADay);
 
-    const totalHours = totalHoursOfADay + carryUpMinutes;
+    const surplusMinutes = surplusCalculation(totalMinutesOfADay);
 
-    const totalMinutes = surplusMinutes + carryUpSeconds;
+    const sumMinutes = surplusMinutes + carryUpSeconds;
+
+    const carryUpMinutes = carryUpCalculation(sumMinutes);
+
+    const totalMinutes = surplusCalculation(sumMinutes);
+
+    const totalHours = totalHoursOfADay + carryUpMinutes;
 
     return { totalHours, totalMinutes, surplusSeconds, date };
   });
